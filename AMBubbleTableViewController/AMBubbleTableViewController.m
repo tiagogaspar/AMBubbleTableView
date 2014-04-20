@@ -315,13 +315,19 @@
 
 - (void)handleKeyboardWillShow:(NSNotification *)notification
 {
+    NSLog(@"TableView Content Size (%f, %f)", self.tableView.contentSize.width, self.tableView.contentSize.height);
+    NSLog(@"TableView Insets (%f, %f)", self.tableView.contentInset.top, self.tableView.contentInset.bottom);
+
 	[self resizeView:notification];
 	[self scrollToBottomAnimated:YES];
 }
 
 - (void)handleKeyboardWillHide:(NSNotification *)notification
 {
-	[self resizeView:notification];	
+    NSLog(@"TableView Content Size (%f, %f)", self.tableView.contentSize.width, self.tableView.contentSize.height);
+    NSLog(@"TableView Insets (%f, %f)", self.tableView.contentInset.top, self.tableView.contentInset.bottom);
+
+	[self resizeView:notification];
 }
 
 - (void)resizeView:(NSNotification*)notification
@@ -358,16 +364,14 @@
 										   inputViewFrameY,
 										   self.imageInput.frame.size.width,
 										   self.imageInput.frame.size.height);
+        
+        UIEdgeInsets insets = UIEdgeInsetsMake(self.tableView.contentInset.top,
+                                               self.tableView.contentInset.left,
+                                               viewHeight - self.imageInput.frame.origin.y - kInputHeight,
+                                               self.tableView.contentInset.right);
 		
-		UIEdgeInsets insets = UIEdgeInsetsMake(0.0f,
-											   0.0f,
-											   viewHeight - self.imageInput.frame.origin.y - kInputHeight,
-											   0.0f);
-		
-		
-		
-		//self.tableView.contentInset = insets;
-		//self.tableView.scrollIndicatorInsets = insets;
+		self.tableView.contentInset = insets;
+		self.tableView.scrollIndicatorInsets = insets;
 	};
 	
 	if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
@@ -402,10 +406,10 @@
 	
 	// Adjust table view's insets
 	CGFloat viewHeight = (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation)) ? self.view.frame.size.width : self.view.frame.size.height;
-	UIEdgeInsets insets = UIEdgeInsetsMake(0.0f,
-										   0.0f,
+	UIEdgeInsets insets = UIEdgeInsetsMake(self.tableView.contentInset.top,
+										   self.tableView.contentInset.left,
 										   viewHeight - self.imageInput.frame.origin.y - kInputHeight,
-										   0.0f);
+										   self.tableView.contentInset.right);
 
 	self.tableView.contentInset = insets;
 	self.tableView.scrollIndicatorInsets = insets;
