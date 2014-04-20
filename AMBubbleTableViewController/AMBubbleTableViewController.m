@@ -366,8 +366,8 @@
 		
 		
 		
-		self.tableView.contentInset = insets;
-		self.tableView.scrollIndicatorInsets = insets;
+		//self.tableView.contentInset = insets;
+		//self.tableView.scrollIndicatorInsets = insets;
 	};
 	
 	if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
